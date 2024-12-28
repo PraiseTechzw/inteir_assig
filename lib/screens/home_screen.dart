@@ -30,133 +30,139 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.teal,
-        elevation: 0,
-        title: Text(
-          "Explore Products",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        bottom: _currentIndex == 0
-            ? PreferredSize(
-                preferredSize: Size.fromHeight(70.0),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 4.0,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          _searchQuery = value.toLowerCase();
-                        });
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Search products...",
-                        prefixIcon: Icon(Icons.search, color: Colors.teal),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: _currentIndex == 0 // Show AppBar only on the Home screen
+        ? AppBar(
+            backgroundColor: Colors.green,
+            elevation: 0,
+            title: Text(
+              "Explore Products",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(70.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 4.0,
+                        offset: Offset(0, 2),
                       ),
+                    ],
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        _searchQuery = value.toLowerCase();
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Search products...",
+                      prefixIcon: Icon(Icons.search, color: Colors.green),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                     ),
                   ),
                 ),
-              )
-            : null,
-      ),
-      body: Container(
-        color: Colors.grey[100],
-        child: _screens[_currentIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
-        elevation: 5.0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.music_note),
-            label: "Audio",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.edit_document),
-            label: "Form",
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Method to build the Home screen content
-  Widget _buildHomeScreen() {
-  return BlocBuilder<HomeBloc, HomeState>(
-    builder: (context, state) {
-      if (state is HomeLoading) {
-        return Center(
-          child: CircularProgressIndicator(
-            color: Colors.teal,
-          ),
-        );
-      } else if (state is HomeLoaded) {
-        final filteredProducts = state.products.where((product) {
-          return product.title.toLowerCase().contains(_searchQuery);
-        }).toList();
-
-        // Replace GridView.builder with ListView.builder
-        return ListView.builder(
-          padding: EdgeInsets.all(16.0),
-          itemCount: filteredProducts.length,
-          itemBuilder: (context, index) {
-            final product = filteredProducts[index];
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailScreen(product: product),
-                  ),
-                );
-              },
-              child: ProductCard(product: product),
-            );
-          },
-        );
-      } else if (state is HomeError) {
-        return Center(
-          child: Text(
-            state.message,
-            style: TextStyle(color: Colors.redAccent, fontSize: 16),
-          ),
-        );
-      }
-      return Center(
-        child: Text(
-          "Start Fetching!",
-          style: TextStyle(color: Colors.grey, fontSize: 16),
+              ),
+            ),
+          )
+        : null, // No AppBar for other screens
+    body: Container(
+      color: Colors.grey[100],
+      child: _screens[_currentIndex],
+    ),
+    bottomNavigationBar: BottomNavigationBar(
+      currentIndex: _currentIndex,
+      onTap: (index) {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Colors.white,
+      elevation: 5.0,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "Home",
         ),
-      );
-    },
+        BottomNavigationBarItem(
+          icon: Icon(Icons.music_note),
+          label: "Audio",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: "Profile",
+        ),
+      ],
+    ),
   );
 }
 
+
+  // Method to build the Home screen content
+  Widget _buildHomeScreen() {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoading) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.green,
+            ),
+          );
+        } else if (state is HomeLoaded) {
+          final filteredProducts = state.products.where((product) {
+            return product.title.toLowerCase().contains(_searchQuery);
+          }).toList();
+
+          return GridView.builder(
+            padding: EdgeInsets.all(16.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 16.0,
+              childAspectRatio: 0.75,
+            ),
+            itemCount: filteredProducts.length,
+            itemBuilder: (context, index) {
+              final product = filteredProducts[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(product: product),
+                    ),
+                  );
+                },
+                child: ProductCard(product: product),
+              );
+            },
+          );
+        } else if (state is HomeError) {
+          return Center(
+            child: Text(
+              state.message,
+              style: TextStyle(color: Colors.redAccent, fontSize: 16),
+            ),
+          );
+        }
+        return Center(
+          child: Text(
+            "Start Fetching!",
+            style: TextStyle(color: Colors.grey, fontSize: 16),
+          ),
+        );
+      },
+    );
+  }
 }
