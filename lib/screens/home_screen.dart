@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ? PreferredSize(
                 preferredSize: Size.fromHeight(70.0),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,

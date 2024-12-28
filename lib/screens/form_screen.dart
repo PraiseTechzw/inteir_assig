@@ -7,8 +7,6 @@ import 'package:inteir_assig/bloc/form/form_event.dart';
 import 'package:inteir_assig/bloc/form/form_state.dart'; // Use the FormState from your project
 
 class FormScreen extends StatelessWidget {
-  const FormScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
