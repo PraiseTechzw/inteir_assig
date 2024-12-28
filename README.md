@@ -27,38 +27,8 @@ Welcome to the **Multi-Feature Application** built using Flutter! This project d
 ## 📂 Project Structure
 <<<<<<< HEAD
 
-![Local Image](assets\1.png)
+![Local Image](/assets/1.png)
 
-
-
-=======
-`
-lib/
-├── api/
-│   └── api_service.dart
-├── bloc/
-│   ├── home/
-│   │   ├── home_bloc.dart
-│   │   ├── home_event.dart
-│   │   └── home_state.dart
-│   └── form/
-│       ├── form_bloc.dart
-│       ├── form_event.dart
-│       └── form_state.dart
-├── models/
-│   └── product.dart
-├── screens/
-│   ├── home_screen.dart
-│   ├── detail_screen.dart
-│   ├── form_screen.dart
-│   └── audio_player_screen.dart
-├── widgets/
-│   └── product_card.dart
-└── main.dart
-`
->>>>>>> 583896a1177dc18ac60599b8e165aa24d5a0cdad
-
----
 
 ## 🚀 Getting Started
 
