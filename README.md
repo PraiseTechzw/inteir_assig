@@ -25,7 +25,7 @@ Welcome to the **Multi-Feature Application** built using Flutter! This project d
 ---
 
 ## 📂 Project Structure
-
+`
 lib/
 ├── api/
 │   └── api_service.dart
@@ -48,7 +48,7 @@ lib/
 ├── widgets/
 │   └── product_card.dart
 └── main.dart
-
+`
 
 ---
 
