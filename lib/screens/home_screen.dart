@@ -100,69 +100,65 @@ Widget build(BuildContext context) {
           label: "Audio",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: "Profile",
+          icon: Icon(Icons.edit_document),
+          label: "Form",
         ),
       ],
     ),
   );
 }
 
-
-  // Method to build the Home screen content
-  Widget _buildHomeScreen() {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.green,
-            ),
-          );
-        } else if (state is HomeLoaded) {
-          final filteredProducts = state.products.where((product) {
-            return product.title.toLowerCase().contains(_searchQuery);
-          }).toList();
-
-          return GridView.builder(
-            padding: EdgeInsets.all(16.0),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 16.0,
-              mainAxisSpacing: 16.0,
-              childAspectRatio: 0.75,
-            ),
-            itemCount: filteredProducts.length,
-            itemBuilder: (context, index) {
-              final product = filteredProducts[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailScreen(product: product),
-                    ),
-                  );
-                },
-                child: ProductCard(product: product),
-              );
-            },
-          );
-        } else if (state is HomeError) {
-          return Center(
-            child: Text(
-              state.message,
-              style: TextStyle(color: Colors.redAccent, fontSize: 16),
-            ),
-          );
-        }
+// Method to build the Home screen content
+Widget _buildHomeScreen() {
+  return BlocBuilder<HomeBloc, HomeState>(
+    builder: (context, state) {
+      if (state is HomeLoading) {
         return Center(
-          child: Text(
-            "Start Fetching!",
-            style: TextStyle(color: Colors.grey, fontSize: 16),
+          child: CircularProgressIndicator(
+            color: Colors.green,
           ),
         );
-      },
-    );
-  }
+      } else if (state is HomeLoaded) {
+        final filteredProducts = state.products.where((product) {
+          return product.title.toLowerCase().contains(_searchQuery);
+        }).toList();
+
+        return ListView.builder(
+          padding: EdgeInsets.all(16.0),
+          itemCount: filteredProducts.length,
+          itemBuilder: (context, index) {
+            final product = filteredProducts[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(product: product),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: ProductCard(product: product),
+              ),
+            );
+          },
+        );
+      } else if (state is HomeError) {
+        return Center(
+          child: Text(
+            state.message,
+            style: TextStyle(color: Colors.redAccent, fontSize: 16),
+          ),
+        );
+      }
+      return Center(
+        child: Text(
+          "Start Fetching!",
+          style: TextStyle(color: Colors.grey, fontSize: 16),
+        ),
+      );
+    },
+  );
+}
 }

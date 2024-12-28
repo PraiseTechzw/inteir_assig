@@ -49,106 +49,109 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
         title: const Text("Audio Player"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Display Album Cover
-            Container(
-              margin: const EdgeInsets.only(top: 32, bottom: 24),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  'assets/image.png',
-                  height: 300,
-                  width: 300,
-                  fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Display Album Cover
+              Container(
+                margin: const EdgeInsets.only(top: 32, bottom: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    'assets/image.png',
+                    height: 300,
+                    width: 300,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            // Song Title and Artist
-            const Text(
-              "Sample Song Title",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              // Song Title and Artist
+              const Text(
+                "Angel Numbers / Ten Toes",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Chris Brown",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              const SizedBox(height: 8),
+              const Text(
+                "Chris Brown",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            // Seek Bar
-            StreamBuilder<DurationState>(
-              stream: _durationStateStream,
-              builder: (context, snapshot) {
-                final durationState = snapshot.data;
-                final position = durationState?.position ?? Duration.zero;
-                final total = durationState?.total ?? Duration.zero;
-
-                return Column(
-                  children: [
-                    Slider(
-                      activeColor: Colors.green,
-                      min: 0.0,
-                      max: total.inMilliseconds.toDouble(),
-                      value: position.inMilliseconds.toDouble().clamp(
-                            0.0,
-                            total.inMilliseconds.toDouble(),
-                          ),
-                      onChanged: (value) {
-                        _audioPlayer.seek(Duration(milliseconds: value.toInt()));
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(_formatDuration(position)),
-                        Text(_formatDuration(total)),
-                      ],
-                    ),
-                  ],
-                );
-              },
-            ),
-            const SizedBox(height: 16),
-            // Playback Controls
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.skip_previous),
-                  iconSize: 40,
-                  onPressed: () {
-                    // Handle skip previous
-                  },
-                ),
-                IconButton(
-                  icon: Icon(_isPlaying ? Icons.pause_circle : Icons.play_circle),
-                  iconSize: 60,
-                  color: Colors.green,
-                  onPressed: () {
-                    _isPlaying ? _audioPlayer.pause() : _audioPlayer.play();
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.skip_next),
-                  iconSize: 40,
-                  onPressed: () {
-                    // Handle skip next
-                  },
-                ),
-              ],
-            ),
-          ],
+              const SizedBox(height: 16),
+              // Seek Bar
+              StreamBuilder<DurationState>(
+                stream: _durationStateStream,
+                builder: (context, snapshot) {
+                  final durationState = snapshot.data;
+                  final position = durationState?.position ?? Duration.zero;
+                  final total = durationState?.total ?? Duration.zero;
+        
+                  return Column(
+                    children: [
+                      Slider(
+                        activeColor: Colors.green,
+                        min: 0.0,
+                        max: total.inMilliseconds.toDouble(),
+                        value: position.inMilliseconds.toDouble().clamp(
+                              0.0,
+                              total.inMilliseconds.toDouble(),
+                            ),
+                        onChanged: (value) {
+                          _audioPlayer.seek(Duration(milliseconds: value.toInt()));
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(_formatDuration(position)),
+                          Text(_formatDuration(total)),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              // Playback Controls
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.skip_previous),
+                    iconSize: 40,
+                    onPressed: () {
+                      // Handle skip previous
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(_isPlaying ? Icons.pause_circle : Icons.play_circle),
+                    iconSize: 60,
+                    color: Colors.green,
+                    onPressed: () {
+                      _isPlaying ? _audioPlayer.pause() : _audioPlayer.play();
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.skip_next),
+                    iconSize: 40,
+                    onPressed: () {
+                      // Handle skip next
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
