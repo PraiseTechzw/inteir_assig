@@ -26,7 +26,8 @@ Welcome to the **Multi-Feature Application** built using Flutter! This project d
 
 ## 📂 Project Structure
 
-lib/ ├── api/ │ └── api_service.dart # Handles API interactions using Dio ├── bloc/ │ ├── home/ │ │ ├── home_bloc.dart # Home screen business logic │ │ ├── home_event.dart # Events for HomeBloc │ │ └── home_state.dart # States for HomeBloc │ └── form/ │ ├── form_bloc.dart # Form validation logic │ ├── form_event.dart # Events for FormBloc │ └── form_state.dart # States for FormBloc ├── models/ │ └── product.dart # Data model for products ├── screens/ │ ├── home_screen.dart # UI for home screen │ ├── detail_screen.dart # UI for product details │ ├── form_screen.dart # UI for form validation │ └── audio_player_screen.dart # UI for audio playback ├── widgets/ │ └── product_card.dart # Reusable widget for product display └── main.dart # App entry point
+![Local Image](assets\1.png)
+
 
 
 
